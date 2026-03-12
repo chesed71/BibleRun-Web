@@ -16,7 +16,7 @@ export function VerseDisplay({ verse }: Props) {
 
   return (
     <div className={styles.container}>
-      <p className={styles.reference}>{verse.displayNameEn}</p>
+      <p className={styles.reference}>{verse.reference}</p>
       <p className={styles.text}>{verse.text}</p>
     </div>
   );
