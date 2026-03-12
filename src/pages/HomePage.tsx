@@ -96,12 +96,10 @@ export function HomePage() {
         playlist={state.playlist}
         verses={allVerses}
         currentIndex={state.currentIndex}
-        globalRepeatCount={state.globalRepeatCount}
         onToggleEnabled={(verseId) => dispatch({ type: 'TOGGLE_VERSE_ENABLED', verseId })}
         onToggleAll={(enabled) => dispatch({ type: 'SET_ALL_ENABLED', enabled })}
         onResetAllRepeat={() => dispatch({ type: 'RESET_ALL_REPEAT' })}
         onRepeatChange={(verseId, count) => dispatch({ type: 'SET_VERSE_REPEAT', verseId, count })}
-        onGlobalRepeatChange={(count) => dispatch({ type: 'SET_GLOBAL_REPEAT', count })}
         onJump={(index) => dispatch({ type: 'JUMP_TO_VERSE', index })}
       />
     </>

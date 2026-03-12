@@ -57,28 +57,11 @@ describe('playerReducer', () => {
       expect(next.currentIndex).toBe(2);
     });
 
-    it('restarts playlist when global repeat not exhausted', () => {
-      const state = makeState({
-        playlist: makePlaylist({ verseId: 1, repeatCount: 1 }),
-        currentIndex: 0,
-        currentRepeatIteration: 0,
-        globalRepeatCount: 3,
-        globalRepeatIteration: 0,
-        isPlaying: true,
-      });
-      const next = playerReducer(state, { type: 'ADVANCE_TO_NEXT' });
-      expect(next.currentIndex).toBe(0);
-      expect(next.globalRepeatIteration).toBe(1);
-      expect(next.isPlaying).toBe(true);
-    });
-
     it('keeps playing in infinite loop mode', () => {
       const state = makeState({
         playlist: makePlaylist({ verseId: 1, repeatCount: 1 }),
         currentIndex: 0,
         currentRepeatIteration: 0,
-        globalRepeatCount: 1,
-        globalRepeatIteration: 0,
         infiniteLoop: true,
         isPlaying: true,
       });
@@ -87,13 +70,11 @@ describe('playerReducer', () => {
       expect(next.isPlaying).toBe(true);
     });
 
-    it('stops when all repeats exhausted', () => {
+    it('stops when playlist ends without infinite loop', () => {
       const state = makeState({
         playlist: makePlaylist({ verseId: 1, repeatCount: 1 }),
         currentIndex: 0,
         currentRepeatIteration: 0,
-        globalRepeatCount: 1,
-        globalRepeatIteration: 0,
         infiniteLoop: false,
         isPlaying: true,
       });

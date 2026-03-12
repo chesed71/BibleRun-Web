@@ -28,8 +28,6 @@ export interface PlayerState {
   isPlaying: boolean;
   currentIndex: number;
   currentRepeatIteration: number;
-  globalRepeatCount: number;
-  globalRepeatIteration: number;
   infiniteLoop: boolean;
   repeatMode: RepeatMode;
   speed: number;

@@ -18,7 +18,6 @@ export type PlayerAction =
   | { type: 'SET_ALL_ENABLED'; enabled: boolean }
   | { type: 'SET_VERSE_REPEAT'; verseId: number; count: number }
   | { type: 'RESET_ALL_REPEAT' }
-  | { type: 'SET_GLOBAL_REPEAT'; count: number }
   | { type: 'ADVANCE_TO_NEXT' }
   | { type: 'JUMP_TO_VERSE'; index: number };
 
@@ -47,8 +46,6 @@ export const initialState: PlayerState = {
   isPlaying: false,
   currentIndex: 0,
   currentRepeatIteration: 0,
-  globalRepeatCount: 1,
-  globalRepeatIteration: 0,
   infiniteLoop: false,
   repeatMode: 'off' as const,
   speed: 1,
@@ -137,11 +134,8 @@ export function playerReducer(state: PlayerState, action: PlayerAction): PlayerS
       return { ...state, playlist, currentRepeatIteration: 0 };
     }
 
-    case 'SET_GLOBAL_REPEAT':
-      return { ...state, globalRepeatCount: Math.max(1, action.count) };
-
     case 'ADVANCE_TO_NEXT': {
-      const { playlist, currentIndex, currentRepeatIteration, globalRepeatCount, globalRepeatIteration, infiniteLoop, repeatMode } = state;
+      const { playlist, currentIndex, currentRepeatIteration, infiniteLoop, repeatMode } = state;
       if (playlist.length === 0) return { ...state, isPlaying: false };
 
       const currentItem = playlist[currentIndex];
@@ -162,15 +156,13 @@ export function playerReducer(state: PlayerState, action: PlayerAction): PlayerS
         return { ...state, currentIndex: nextIndex, currentRepeatIteration: 0 };
       }
 
-      const nextGlobalIteration = globalRepeatIteration + 1;
-      if (infiniteLoop || nextGlobalIteration < globalRepeatCount) {
+      if (infiniteLoop) {
         const firstEnabled = findFirstEnabledIndex(playlist);
         if (firstEnabled === -1) return { ...state, isPlaying: false };
         return {
           ...state,
           currentIndex: firstEnabled,
           currentRepeatIteration: 0,
-          globalRepeatIteration: infiniteLoop ? globalRepeatIteration : nextGlobalIteration,
         };
       }
 
@@ -178,7 +170,6 @@ export function playerReducer(state: PlayerState, action: PlayerAction): PlayerS
         ...state,
         isPlaying: false,
         currentRepeatIteration: 0,
-        globalRepeatIteration: 0,
       };
     }
 

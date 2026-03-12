@@ -11,12 +11,10 @@ interface Props {
   playlist: PlaylistItemType[];
   verses: Verse[];
   currentIndex: number;
-  globalRepeatCount: number;
   onToggleEnabled: (verseId: number) => void;
   onToggleAll: (enabled: boolean) => void;
   onResetAllRepeat: () => void;
   onRepeatChange: (verseId: number, count: number) => void;
-  onGlobalRepeatChange: (count: number) => void;
   onJump: (index: number) => void;
 }
 
@@ -24,12 +22,10 @@ export function Playlist({
   playlist,
   verses,
   currentIndex,
-  globalRepeatCount,
   onToggleEnabled,
   onToggleAll,
   onResetAllRepeat,
   onRepeatChange,
-  onGlobalRepeatChange,
   onJump,
 }: Props) {
   const totalPages = Math.max(1, Math.ceil(playlist.length / PAGE_SIZE));
@@ -51,10 +47,8 @@ export function Playlist({
   return (
     <div>
       <PlaylistHeader
-        globalRepeatCount={globalRepeatCount}
         allEnabled={playlist.length > 0 && playlist.every((item) => item.enabled)}
         someEnabled={playlist.some((item) => item.enabled)}
-        onGlobalRepeatChange={onGlobalRepeatChange}
         onToggleAll={onToggleAll}
         onResetAllRepeat={onResetAllRepeat}
       />
