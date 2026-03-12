@@ -1,12 +1,10 @@
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { usePlayer } from '../context/PlayerContext';
 import { useAudioPlayer } from '../hooks/useAudioPlayer';
 import { VerseDisplay } from '../components/player/VerseDisplay';
 import { ProgressBar } from '../components/player/ProgressBar';
 import { PlayerControls } from '../components/player/PlayerControls';
-import { SpeedSelector } from '../components/player/SpeedSelector';
 import { Playlist } from '../components/playlist/Playlist';
-import { AddVerseModal } from '../components/playlist/AddVerseModal';
 import versesData from '../data/verses.json';
 import type { Verse } from '../types';
 
@@ -14,7 +12,6 @@ const allVerses: Verse[] = versesData as Verse[];
 
 export function HomePage() {
   const { state, dispatch } = usePlayer();
-  const [showModal, setShowModal] = useState(false);
 
   const currentPlaylistItem = state.playlist[state.currentIndex];
   const currentVerse = currentPlaylistItem
@@ -83,11 +80,6 @@ export function HomePage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [dispatch, seek, currentTime, duration]);
 
-  const addedVerseIds = useMemo(
-    () => new Set(state.playlist.map((item) => item.verseId)),
-    [state.playlist],
-  );
-
   return (
     <>
       <VerseDisplay verse={currentVerse} />
@@ -111,16 +103,7 @@ export function HomePage() {
         onRepeatChange={(verseId, count) => dispatch({ type: 'SET_VERSE_REPEAT', verseId, count })}
         onGlobalRepeatChange={(count) => dispatch({ type: 'SET_GLOBAL_REPEAT', count })}
         onJump={(index) => dispatch({ type: 'JUMP_TO_VERSE', index })}
-        onAddClick={() => setShowModal(true)}
       />
-      {showModal && (
-        <AddVerseModal
-          verses={allVerses}
-          addedVerseIds={addedVerseIds}
-          onAdd={(verseId) => dispatch({ type: 'ADD_VERSE', verseId })}
-          onClose={() => setShowModal(false)}
-        />
-      )}
     </>
   );
 }

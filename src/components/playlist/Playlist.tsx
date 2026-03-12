@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Verse, PlaylistItem as PlaylistItemType } from '../../types';
 import { PlaylistHeader } from './PlaylistHeader';
 import { PlaylistItem } from './PlaylistItem';
@@ -18,7 +18,6 @@ interface Props {
   onRepeatChange: (verseId: number, count: number) => void;
   onGlobalRepeatChange: (count: number) => void;
   onJump: (index: number) => void;
-  onAddClick: () => void;
 }
 
 export function Playlist({
@@ -32,7 +31,6 @@ export function Playlist({
   onRepeatChange,
   onGlobalRepeatChange,
   onJump,
-  onAddClick,
 }: Props) {
   const totalPages = Math.max(1, Math.ceil(playlist.length / PAGE_SIZE));
   const [page, setPage] = useState(0);
