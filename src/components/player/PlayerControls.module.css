@@ -1,0 +1,61 @@
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 0 0 8px;
+}
+
+.sideButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #999999;
+  transition: color 0.2s;
+}
+
+.sideButton:hover {
+  color: var(--color-text);
+  background: #f0f0f0;
+}
+
+.sideButtonActive {
+  color: var(--color-primary);
+}
+
+.playButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #ffffff;
+  transition: opacity 0.2s;
+}
+
+.playButton:hover {
+  opacity: 0.9;
+}
+
+.speedBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  transition: color 0.2s;
+}
+
+.speedBadge:hover {
+  color: var(--color-text);
+  background: #f0f0f0;
+}

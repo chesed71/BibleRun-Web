@@ -1,0 +1,46 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.index {
+  width: 24px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.indexPlaying {
+  color: var(--color-primary);
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.duration {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.repeat {
+  flex-shrink: 0;
+}

@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.label {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-right: 4px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  transition: background 0.2s;
+}
+
+.button:hover {
+  background: #f0f0f0;
+}
+
+.count {
+  font-size: 0.95rem;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+}

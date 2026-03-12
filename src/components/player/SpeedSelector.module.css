@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 0;
+}
+
+.label {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-right: auto;
+}
+
+.button {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text);
+  transition: all 0.2s;
+}
+
+.button:hover {
+  background: #f0f0f0;
+}
+
+.buttonActive {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.buttonActive:hover {
+  background: var(--color-primary);
+  opacity: 0.9;
+}

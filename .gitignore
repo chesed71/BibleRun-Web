@@ -1,0 +1,10 @@
+node_modules
+dist
+.venv
+__pycache__
+*.pyc
+.claude
+.council
+bible_verses_tts/
+bible_verses_mp3/
+clipboard_img_*.png

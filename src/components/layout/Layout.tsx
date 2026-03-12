@@ -1,0 +1,12 @@
+import type { ReactNode } from 'react';
+import { Header } from './Header';
+import styles from './Layout.module.css';
+
+export function Layout({ children }: { children: ReactNode }) {
+  return (
+    <div className={styles.container}>
+      {/* <Header /> */}
+      <main className={styles.main}>{children}</main>
+    </div>
+  );
+}
