@@ -7,6 +7,7 @@ import { PlayerControls } from '../components/player/PlayerControls';
 import { Playlist } from '../components/playlist/Playlist';
 import versesData from '../data/verses.json';
 import type { Verse } from '../types';
+import styles from './HomePage.module.css';
 
 const allVerses: Verse[] = versesData as Verse[];
 
@@ -23,13 +24,18 @@ export function HomePage() {
     ? allVerses.find((v) => v.id === nextPlaylistItem.verseId) ?? null
     : null;
 
+  const getAudioSrc = (verse: Verse | null) => {
+    if (!verse) return null;
+    return state.mode === 'practice' ? verse.practiceAudioFile : verse.audioFile;
+  };
+
   const onEnded = useCallback(() => {
     dispatch({ type: 'ADVANCE_TO_NEXT' });
   }, [dispatch]);
 
   const { currentTime, duration, play, pause, seek } = useAudioPlayer({
-    src: currentVerse?.audioFile ?? null,
-    nextSrc: nextVerse?.audioFile ?? null,
+    src: getAudioSrc(currentVerse),
+    nextSrc: getAudioSrc(nextVerse),
     speed: state.speed,
     onEnded,
   });
@@ -82,6 +88,22 @@ export function HomePage() {
 
   return (
     <>
+      <div className={styles.modeTabs}>
+        <button
+          className={`${styles.modeTab} ${state.mode === 'listen' ? styles.modeTabActive : ''}`}
+          onClick={() => dispatch({ type: 'SET_MODE', mode: 'listen' })}
+        >
+          듣기 모드
+          <span className={styles.tooltip}>구절을 순서대로 들어요</span>
+        </button>
+        <button
+          className={`${styles.modeTab} ${state.mode === 'practice' ? styles.modeTabActive : ''}`}
+          onClick={() => dispatch({ type: 'SET_MODE', mode: 'practice' })}
+        >
+          연습 모드
+          <span className={styles.tooltip}>듣고 → 쉬고 → 따라 읽어요</span>
+        </button>
+      </div>
       <VerseDisplay verse={currentVerse} />
       <ProgressBar currentTime={currentTime} duration={duration} onSeek={seek} />
       <PlayerControls

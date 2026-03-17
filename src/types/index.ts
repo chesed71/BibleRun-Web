@@ -11,6 +11,7 @@ export interface Verse {
   displayNameEn: string;
   text: string;
   audioFile: string;
+  practiceAudioFile: string;
   duration: number;
 }
 
@@ -22,6 +23,7 @@ export interface PlaylistItem {
 }
 
 export type RepeatMode = 'off' | 'all' | 'one';
+export type PlayMode = 'listen' | 'practice';
 
 export interface PlayerState {
   playlist: PlaylistItem[];
@@ -31,4 +33,5 @@ export interface PlayerState {
   infiniteLoop: boolean;
   repeatMode: RepeatMode;
   speed: number;
+  mode: PlayMode;
 }

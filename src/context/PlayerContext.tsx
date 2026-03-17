@@ -1,8 +1,9 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode, type Dispatch } from 'react';
-import type { PlayerState, PlaylistItem, Verse } from '../types';
+import type { PlayerState, PlaylistItem, PlayMode, Verse } from '../types';
 import versesData from '../data/verses.json';
 
 const STORAGE_KEY = 'biblerun-playlist';
+const MODE_STORAGE_KEY = 'biblerun-mode';
 const allVerses: Verse[] = versesData as Verse[];
 
 export type PlayerAction =
@@ -19,7 +20,8 @@ export type PlayerAction =
   | { type: 'SET_VERSE_REPEAT'; verseId: number; count: number }
   | { type: 'RESET_ALL_REPEAT' }
   | { type: 'ADVANCE_TO_NEXT' }
-  | { type: 'JUMP_TO_VERSE'; index: number };
+  | { type: 'JUMP_TO_VERSE'; index: number }
+  | { type: 'SET_MODE'; mode: PlayMode };
 
 function makeDefaultPlaylist(): PlaylistItem[] {
   return allVerses.map((v, i) => ({
@@ -41,6 +43,14 @@ function getInitialPlaylist(): PlaylistItem[] {
   return makeDefaultPlaylist();
 }
 
+function getInitialMode(): PlayMode {
+  try {
+    const stored = localStorage.getItem(MODE_STORAGE_KEY);
+    if (stored === 'listen' || stored === 'practice') return stored;
+  } catch { /* ignore */ }
+  return 'listen';
+}
+
 export const initialState: PlayerState = {
   playlist: getInitialPlaylist(),
   isPlaying: false,
@@ -49,6 +59,7 @@ export const initialState: PlayerState = {
   infiniteLoop: false,
   repeatMode: 'off' as const,
   speed: 1,
+  mode: getInitialMode(),
 };
 
 function findNextEnabledIndex(playlist: PlaylistItem[], fromIndex: number): number {
@@ -176,6 +187,9 @@ export function playerReducer(state: PlayerState, action: PlayerAction): PlayerS
     case 'JUMP_TO_VERSE':
       return { ...state, currentIndex: action.index, currentRepeatIteration: 0, isPlaying: true };
 
+    case 'SET_MODE':
+      return { ...state, mode: action.mode, isPlaying: false, currentRepeatIteration: 0 };
+
     default:
       return state;
   }
@@ -196,6 +210,12 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state.playlist));
     } catch { /* ignore */ }
   }, [state.playlist]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(MODE_STORAGE_KEY, state.mode);
+    } catch { /* ignore */ }
+  }, [state.mode]);
 
   return (
     <PlayerContext.Provider value={{ state, dispatch }}>
