@@ -23,7 +23,18 @@ export interface PlaylistItem {
 }
 
 export type RepeatMode = 'off' | 'all' | 'one';
-export type PlayMode = 'listen' | 'practice';
+export type PlayMode = 'listen' | 'recite' | 'check';
+
+export interface RecitationResult {
+  transcript: string;
+  accuracy: number;
+  segments: RecitationSegment[];
+}
+
+export interface RecitationSegment {
+  text: string;
+  type: 'correct' | 'wrong' | 'missing';
+}
 
 export interface PlayerState {
   playlist: PlaylistItem[];

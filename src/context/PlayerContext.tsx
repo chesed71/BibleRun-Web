@@ -46,7 +46,8 @@ function getInitialPlaylist(): PlaylistItem[] {
 function getInitialMode(): PlayMode {
   try {
     const stored = localStorage.getItem(MODE_STORAGE_KEY);
-    if (stored === 'listen' || stored === 'practice') return stored;
+    if (stored === 'practice') return 'check';
+    if (stored === 'listen' || stored === 'recite' || stored === 'check') return stored;
   } catch { /* ignore */ }
   return 'listen';
 }

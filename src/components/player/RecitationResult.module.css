@@ -1,0 +1,117 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.accuracy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.accuracyNumber {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.accuracyMessage {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.accuracyHigh {
+  color: #22c55e;
+}
+
+.accuracyMedium {
+  color: #f59e0b;
+}
+
+.accuracyLow {
+  color: #ef4444;
+}
+
+.section {
+  width: 100%;
+  padding: 12px 16px;
+  background: #f8f8f8;
+  border-radius: 8px;
+}
+
+.sectionLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.segments {
+  font-family: var(--font-verse);
+  font-size: 1.1rem;
+  line-height: 2;
+  word-break: keep-all;
+}
+
+.correct {
+  color: var(--color-text);
+}
+
+.wrong {
+  color: #ef4444;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.missing {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+.transcriptText {
+  font-size: 1rem;
+  color: var(--color-text);
+  line-height: 1.8;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.retryButton {
+  padding: 10px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: #fff;
+  border: 2px solid var(--color-primary);
+  border-radius: 24px;
+  transition: background 0.2s;
+}
+
+.retryButton:hover {
+  background: #f0f0ff;
+}
+
+.nextButton {
+  padding: 10px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-primary);
+  border-radius: 24px;
+  transition: opacity 0.2s;
+}
+
+.nextButton:hover {
+  opacity: 0.9;
+}
