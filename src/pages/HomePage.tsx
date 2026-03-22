@@ -16,8 +16,8 @@ const allVerses: Verse[] = versesData as Verse[];
 
 const MODE_CONFIG: Array<{ mode: PlayMode; label: string; tooltip: string }> = [
   { mode: 'listen', label: '듣기', tooltip: '구절을 순서대로 들어요' },
+  { mode: 'check', label: '연습', tooltip: '구절 → 암송 → 확인' },
   { mode: 'recite', label: '암송', tooltip: '구절을 보지 않고 암송해요' },
-  { mode: 'check', label: '확인', tooltip: '듣고 → 쉬고 → 따라 읽어요' },
 ];
 
 export function HomePage() {
