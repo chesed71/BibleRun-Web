@@ -23,7 +23,7 @@ export interface PlaylistItem {
 }
 
 export type RepeatMode = 'off' | 'all' | 'one';
-export type PlayMode = 'listen' | 'recite' | 'check';
+export type PlayMode = 'scripture' | 'listen' | 'recite' | 'check';
 
 export interface RecitationResult {
   transcript: string;

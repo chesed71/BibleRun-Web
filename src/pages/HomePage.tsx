@@ -8,6 +8,7 @@ import { PlayerControls } from '../components/player/PlayerControls';
 import { RecitationResult } from '../components/player/RecitationResult';
 import { Playlist } from '../components/playlist/Playlist';
 import { RecitePlaylist } from '../components/playlist/RecitePlaylist';
+import { ScriptureView } from '../components/scripture/ScriptureView';
 import versesData from '../data/verses.json';
 import type { Verse, PlayMode } from '../types';
 import styles from './HomePage.module.css';
@@ -15,6 +16,7 @@ import styles from './HomePage.module.css';
 const allVerses: Verse[] = versesData as Verse[];
 
 const MODE_CONFIG: Array<{ mode: PlayMode; label: string; tooltip: string }> = [
+  { mode: 'scripture', label: '말씀', tooltip: '주차별 구절을 확인해요' },
   { mode: 'listen', label: '듣기', tooltip: '구절을 순서대로 들어요' },
   { mode: 'check', label: '연습', tooltip: '구절 → 암송 → 확인' },
   { mode: 'recite', label: '암송', tooltip: '구절을 보지 않고 암송해요' },
@@ -159,7 +161,9 @@ export function HomePage() {
         ))}
       </div>
 
-      {isReciteMode ? (
+      {state.mode === 'scripture' ? (
+        <ScriptureView verses={allVerses} />
+      ) : isReciteMode ? (
         <>
           <p className={styles.reciteDisclaimer}>음성 녹음 인식률이 별로 좋지 않습니다. 이해부탁드립니다.</p>
           {status === 'idle' && currentVerse && (
