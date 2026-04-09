@@ -26,6 +26,11 @@
   color: var(--color-primary);
 }
 
+.sideButtonActive:hover {
+  color: var(--color-primary);
+  background: #f0f0f0;
+}
+
 .playButton {
   display: flex;
   align-items: center;
