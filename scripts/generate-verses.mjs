@@ -87,6 +87,7 @@ const verses = rawVerses.map((v) => {
     displayNameEn: buildDisplayNameEn(bookEn, v.chapter, v.start_verse, v.end_verse, verseSuffix),
     text: v.text,
     audioFile: `/audio/${mp3File}`,
+    practiceAudioFile: `/audio/practice/${v.filename}_practice.mp3`,
     duration: Math.round(duration * 100) / 100,
   };
 });
