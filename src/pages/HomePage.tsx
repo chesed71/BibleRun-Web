@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePlayer } from '../context/PlayerContext';
 import { useAudioPlayer } from '../hooks/useAudioPlayer';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
@@ -9,6 +9,7 @@ import { RecitationResult } from '../components/player/RecitationResult';
 import { Playlist } from '../components/playlist/Playlist';
 import { RecitePlaylist } from '../components/playlist/RecitePlaylist';
 import { ScriptureView } from '../components/scripture/ScriptureView';
+import { Toast } from '../components/common/Toast';
 import versesData from '../data/verses.json';
 import type { Verse, PlayMode } from '../types';
 import styles from './HomePage.module.css';
@@ -22,10 +23,37 @@ const MODE_CONFIG: Array<{ mode: PlayMode; label: string; tooltip: string }> = [
   { mode: 'recite', label: '암송', tooltip: '구절을 보지 않고 암송해요' },
 ];
 
+const SEEN_MODE_HINTS_KEY = 'biblerun-seen-mode-hints';
+
+function loadSeenModeHints(): Set<PlayMode> {
+  try {
+    const stored = localStorage.getItem(SEEN_MODE_HINTS_KEY);
+    if (!stored) return new Set();
+    return new Set(JSON.parse(stored) as PlayMode[]);
+  } catch {
+    return new Set();
+  }
+}
+
 export function HomePage() {
   const { state, dispatch } = usePlayer();
   const { status, result, error, isSupported, startRecording, stopRecording, reset } =
     useSpeechRecognition();
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [seenModeHints, setSeenModeHints] = useState<Set<PlayMode>>(loadSeenModeHints);
+
+  const handleSelectMode = (mode: PlayMode, tooltip: string) => {
+    dispatch({ type: 'SET_MODE', mode });
+    if (seenModeHints.has(mode)) return;
+    setToastMessage(tooltip);
+    const updated = new Set(seenModeHints).add(mode);
+    setSeenModeHints(updated);
+    try {
+      localStorage.setItem(SEEN_MODE_HINTS_KEY, JSON.stringify([...updated]));
+    } catch {
+      // localStorage 사용 불가 시 무시
+    }
+  };
 
   const currentPlaylistItem = state.playlist[state.currentIndex];
   const currentVerse = currentPlaylistItem
@@ -153,10 +181,9 @@ export function HomePage() {
           <button
             key={mode}
             className={`${styles.modeTab} ${state.mode === mode ? styles.modeTabActive : ''}`}
-            onClick={() => dispatch({ type: 'SET_MODE', mode })}
+            onClick={() => handleSelectMode(mode, tooltip)}
           >
             {label}
-            <span className={styles.tooltip}>{tooltip}</span>
           </button>
         ))}
       </div>
@@ -251,6 +278,14 @@ export function HomePage() {
             onJump={(index) => dispatch({ type: 'JUMP_TO_VERSE', index })}
           />
         </>
+      )}
+
+      {toastMessage && (
+        <Toast
+          key={toastMessage}
+          message={toastMessage}
+          onDismiss={() => setToastMessage(null)}
+        />
       )}
     </>
   );
